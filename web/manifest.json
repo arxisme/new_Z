@@ -1,6 +1,6 @@
 {
-    "name": "newss",
-    "short_name": "newss",
+    "name": "newz",
+    "short_name": "newz",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

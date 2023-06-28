@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:url_launcher/url_launcher.dart';
+
 void main() {
   runApp(const HackerNewsApp());
 }
@@ -13,9 +13,10 @@ class HackerNewsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'neW_Z',
+      title: 'neWZ',
+
       theme: ThemeData(
-        primarySwatch: Colors.cyan,
+        primarySwatch: Colors.grey,
       ),
       home: const HomePage(),
     );
@@ -53,17 +54,37 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('new_Z'),
+        titleTextStyle: const TextStyle(
+          fontSize: 30,
+          fontWeight:FontWeight.bold,
+          color: Color.fromARGB(255, 248, 255, 254),
+        ),
+        
+        
         actions: [
           DropdownButton<StoryType>(
             value: _selectedStoryType,
+            dropdownColor: const Color.fromARGB(255, 60, 45, 73),
             items: const [
               DropdownMenuItem(
                 value: StoryType.topStories,
-                child: Text('Top Stories'),
+                child: Text(
+                  'Top Stories',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  ),),
               ),
               DropdownMenuItem(
                 value: StoryType.bestStories,
-                child: Text('Best Stories'),
+                child: Text(
+                  'Best Stories',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),),
               ),
             ],
             onChanged: (StoryType? newValue) {
@@ -110,11 +131,13 @@ class StoryTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 100,
-        margin: const EdgeInsets.all(8),
+        height: 80,
+        margin: const EdgeInsets.all(1),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
+          //color: Color.fromARGB(232, 36, 36, 51),
+          color: const Color.fromARGB(255, 50, 44, 56),
+        
+          borderRadius: BorderRadius.circular(5),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
@@ -127,13 +150,17 @@ class StoryTile extends StatelessWidget {
           title: Text(
             story['title'],
             style: const TextStyle(
-              fontSize: 16,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
           ),
           subtitle: Text(
             'Author: ${story['by']}   Score: ${story['score']}.',
-            style: const TextStyle(fontSize: 12),
+            style: const TextStyle(
+              fontSize: 12,
+              color: Color.fromARGB(255, 253, 253, 253),
+            ),
           ),
         ),
       ),
@@ -152,7 +179,8 @@ class StoryWebView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        
+        toolbarHeight: 1,
+        backgroundColor: const Color.fromARGB(0, 143, 143, 143),
       ),
       body: WebView(
         initialUrl: url,
@@ -185,7 +213,7 @@ class HackerNewsAPI {
     final List<dynamic> storyIds = jsonDecode(response.body);
 
     final List<dynamic> stories = await Future.wait(
-      storyIds.take(20).map((id) => fetchStory(id)),
+      storyIds.take(50).map((id) => fetchStory(id)),
     );
 
     return stories;
